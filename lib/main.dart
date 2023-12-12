@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Authentication package
 import 'package:table_calendar/table_calendar.dart'; // Import calendar package
 import 'package:intl/intl.dart'; // For date formatting
+import 'package:carousel_slider/carousel_slider.dart';
 
 void main() {
   runApp(VibbyApp());
@@ -21,6 +22,10 @@ class VibbyApp extends StatelessWidget {
     );
   }
 }
+
+//
+// SPLASH SCREEN
+//
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -75,7 +80,10 @@ class SplashScreen extends StatelessWidget {
   }
 }
 
+//
 // MoodSelectionWidget
+//
+
 class MoodSelectionWidget extends StatelessWidget {
   final Function(String) onMoodSelected;
 
@@ -170,7 +178,10 @@ class MoodSelectionWidget extends StatelessWidget {
   }
 }
 
+//
 // DiaryPage
+//
+
 class DiaryPage extends StatefulWidget {
   @override
   _DiaryPageState createState() => _DiaryPageState();
@@ -255,7 +266,7 @@ class _DiaryPageState extends State<DiaryPage> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DiaryPage(),
+                  builder: (context) => Todo(),
                 ),
               );
               break;
@@ -291,6 +302,10 @@ class _DiaryPageState extends State<DiaryPage> {
     );
   }
 }
+
+//
+// DIARY CONTENT
+//
 
 class DiaryContent extends StatefulWidget {
   @override
@@ -397,6 +412,10 @@ class _DiaryContentState extends State<DiaryContent> {
   }
 }
 
+//
+// DIARY ENTRY
+//
+
 class AddDiaryEntryPage extends StatelessWidget {
   final DateTime selectedDate;
 
@@ -448,7 +467,10 @@ class AddDiaryEntryPage extends StatelessWidget {
   }
 }
 
+//
 //Virtual Support Group
+//
+
 class VirtualSupportGroupPage extends StatefulWidget {
   @override
   _VirtualSupportGroupPageState createState() =>
@@ -462,17 +484,57 @@ class _VirtualSupportGroupPageState extends State<VirtualSupportGroupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Virtual Support Group'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 20), // Adjust spacing as needed
-            _buildContactsSection(), // My Contacts section
-          ],
+        leading: Padding(
+          padding: const EdgeInsets.only(
+              left: 15.0), // Adjust the left padding as needed
+          child: GestureDetector(
+            onTap: () {
+              setState(() {});
+            },
+            child: Image.asset(
+              "assets/vibby logo.png", // Replace with your Vibby logo image path
+              width: 50, // Set the width as needed
+              height: 50, // Set the height as needed
+            ),
+          ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DiaryPage(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.groups),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VirtualSupportGroupPage(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileSettingsPage(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
+      body: _getBodyContent(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (int index) {
@@ -491,7 +553,7 @@ class _VirtualSupportGroupPageState extends State<VirtualSupportGroupPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.groups),
-            label: 'Group',
+            label: 'Find Groups',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.forum),
@@ -501,6 +563,23 @@ class _VirtualSupportGroupPageState extends State<VirtualSupportGroupPage> {
       ),
     );
   }
+
+  Widget _getBodyContent() {
+    switch (_currentIndex) {
+      case 0:
+        return _buildContactsSection(); // Show contacts section for index 0
+      case 1:
+        return FindGroupsContent(); // Show Find Groups content for index 1
+      case 2:
+        return Container(); // You can add content for other tabs if needed
+      default:
+        return Container();
+    }
+  }
+
+//
+// MY CONTACTS
+//
 
   Widget _buildContactsSection() {
     return Container(
@@ -595,6 +674,90 @@ class _VirtualSupportGroupPageState extends State<VirtualSupportGroupPage> {
   }
 }
 
+//
+//FIND GROUPS
+//
+
+class FindGroupsContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 430,
+      height: 932,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(color: Color(0xFFF8F8F8)),
+      child: Stack(
+        children: [
+          // Placeholder for a Small Icon or Indicator
+          Positioned(
+            left: 28,
+            top: 100,
+            child: Container(
+              width: 150,
+              height: 150,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      'assets/exo.png'), // Replace with your image path
+                  fit: BoxFit.cover, // Adjust the fit as needed
+                ),
+                color: Colors
+                    .grey, // Replace with desired color or remove for image
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0x3F000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            left: 28,
+            top: 226,
+            child: Container(
+              width: 150,
+              height: 24,
+              decoration: BoxDecoration(
+                color: Color(0xFFF8F8F8),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 86,
+            top: 230,
+            child: Opacity(
+              opacity: 0.70,
+              child: Text(
+                'Kpop',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                  height: 0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+//
+// PROFILE SETTINGS
+//
+
 class ProfileSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -622,5 +785,204 @@ class PasscodePage extends StatelessWidget {
         child: Text('Passcode Page'),
       ),
     );
+  }
+}
+
+//
+//TODO
+//
+
+class Todo extends StatelessWidget {
+  const Todo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 150,
+          title: const Text('TO-DO LIST'),
+          centerTitle: true,
+          toolbarTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        body: Column(children: <Widget>[
+          CarouselSlider(
+            items: [
+              //1st Image of Slider
+              Container(
+                margin: const EdgeInsets.all(6.0),
+                padding: const EdgeInsets.all(
+                    8.0), // Optional: Add padding for better visual appearance
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: const Color.fromARGB(
+                      255, 30, 12, 59), // Set your desired background color
+                ),
+                child: const Center(
+                  child: Text(
+                    'All',
+                    style: TextStyle(
+                      fontSize: 18.0, // Set your desired font size
+                      fontWeight:
+                          FontWeight.bold, // Set your desired font weight
+                      color: Colors.white, // Set your desired text color
+                    ),
+                  ),
+                ),
+              ),
+
+              //2nd Image of Slider
+              Container(
+                margin: const EdgeInsets.all(6.0),
+                padding: const EdgeInsets.all(
+                    8.0), // Optional: Add padding for better visual appearance
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.white, // Set your desired background color
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 30, 12, 59),
+                    )),
+                child: const Center(
+                  child: Text(
+                    'Important',
+                    style: TextStyle(
+                      fontSize: 18.0, // Set your desired font size
+                      fontWeight:
+                          FontWeight.bold, // Set your desired font weight
+                      color: Colors.black, // Set your desired text color
+                    ),
+                  ),
+                ),
+              ),
+
+              //3rd Image of Slider
+              Container(
+                margin: const EdgeInsets.all(6.0),
+                padding: const EdgeInsets.all(
+                    8.0), // Optional: Add padding for better visual appearance
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.white, // Set your desired background color
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 30, 12, 59),
+                    )),
+                child: const Center(
+                  child: Text(
+                    'Org Task',
+                    style: TextStyle(
+                      fontSize: 18.0, // Set your desired font size
+                      fontWeight:
+                          FontWeight.bold, // Set your desired font weight
+                      color: Colors.black, // Set your desired text color
+                    ),
+                  ),
+                ),
+              ),
+
+              //4th Image of Slider
+              Container(
+                margin: const EdgeInsets.all(6.0),
+                padding: const EdgeInsets.all(
+                    8.0), // Optional: Add padding for better visual appearance
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.white, // Set your desired background color
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 30, 12, 59),
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    'My Lectures',
+                    style: TextStyle(
+                      fontSize: 18.0, // Set your desired font size
+                      fontWeight:
+                          FontWeight.bold, // Set your desired font weight
+                      color: Colors.black, // Set your desired text color
+                    ),
+                  ),
+                ),
+              ),
+
+              //5th Image of Slider
+              Container(
+                margin: const EdgeInsets.all(6.0),
+                padding: const EdgeInsets.all(
+                    8.0), // Optional: Add padding for better visual appearance
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.white, // Set your desired background color
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 30, 12, 59),
+                    )),
+                child: const Center(
+                  child: Text(
+                    'Arya\'s List',
+                    style: TextStyle(
+                      fontSize: 18.0, // Set your desired font size
+                      fontWeight:
+                          FontWeight.bold, // Set your desired font weight
+                      color: Colors.black, // Set your desired text color
+                    ),
+                  ),
+                ),
+              ),
+            ],
+
+            //Slider Container properties
+            options: CarouselOptions(
+              height: 60.0,
+              enlargeCenterPage: false,
+              autoPlay: false,
+              aspectRatio: 16 / 9,
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enableInfiniteScroll: false,
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              viewportFraction: 0.35,
+            ),
+          ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Card(
+                elevation: 50,
+                shadowColor: Colors.black,
+                margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
+                color: Color.fromARGB(255, 68, 117, 157),
+                child: SizedBox(
+                  width: 150,
+                  height: 200,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
+                    child: Text(
+                      'Important',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 50,
+                shadowColor: Colors.black,
+                margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
+                color: Color.fromARGB(255, 224, 143, 232),
+                child: SizedBox(
+                  width: 150,
+                  height: 200,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
+                    child: Text(
+                      'Org Tasks',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ]));
   }
 }

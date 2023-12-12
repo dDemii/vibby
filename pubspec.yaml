@@ -34,6 +34,8 @@ dependencies:
   table_calendar: ^3.0.9
   intl: ^0.18.0
   cupertino_icons: ^1.0.2
+  carousel_slider: ^4.2.1
+
   # Add any other dependencies your project requires
 
 

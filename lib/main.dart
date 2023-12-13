@@ -571,7 +571,7 @@ class _VirtualSupportGroupPageState extends State<VirtualSupportGroupPage> {
       case 1:
         return FindGroupsContent(); // Show Find Groups content for index 1
       case 2:
-        return Container(); // You can add content for other tabs if needed
+        return ForumContent(); // You can add content for other tabs if needed
       default:
         return Container();
     }
@@ -755,19 +755,809 @@ class FindGroupsContent extends StatelessWidget {
 }
 
 //
+// FORUM
+//
+
+class ForumContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 500,
+      height: 600,
+      child: Stack(
+        children: [
+//section 1
+
+          Positioned(
+            left: 20,
+            top: 0,
+            child: Container(
+              width: 400,
+              height: 89,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 0,
+                    top: 50,
+                    child: SizedBox(
+                      width: 400,
+                      child: Text(
+                        'Explore Community',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 32,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+//section 2
+
+          Positioned(
+            left: 20,
+            top: 120,
+            child: Container(
+              width: 350,
+              height: 75,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    child: Container(
+                      width: 350,
+                      height: 75,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFEFCEFF),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 4),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                        border: Border.all(
+                          width: 1,
+                          color: Color(0xFF5C00A4), // Border color
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 275,
+                    top: 2,
+                    child: Container(
+                      width: 70,
+                      height: 70,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                          // Add your content for this container
+                          ),
+                      child: Stack(
+                        children: [
+                          // Add your content for this stack
+                          Center(
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: const Color.fromRGBO(92, 0, 164, 1),
+                              ),
+                              iconSize: 50,
+                              onPressed: () {
+                                // Add your onPressed functionality here
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 23,
+                    top: 28,
+                    child: Text(
+                      'Care to share some thoughts?',
+                      style: TextStyle(
+                        color: Color(0xFF200D3C),
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                        height: 0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+//section 3
+
+          Positioned(
+            left: 20,
+            top: 220,
+            child: Container(
+              width: 400,
+              height: 74,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    child: SizedBox(
+                      width: 400,
+                      child: Text(
+                        'Recent Posts',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 24,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: 39,
+                    child: Container(
+                      width: 350,
+                      height: 35,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 0,
+                            top: 0,
+                            child: Container(
+                              width: 350,
+                              height: 35,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  width: 1,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0x3F000000),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 4),
+                                    spreadRadius: 0,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 47,
+                            top: 9,
+                            child: Opacity(
+                              opacity: 0.50,
+                              child: Text(
+                                'Search Community',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+//section 4
+
+          Positioned(
+            left: 20,
+            top: 320,
+            child: Container(
+              width: 400,
+              height: 25,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildCarouselItem('Trending'),
+                  SizedBox(width: 12),
+
+                  _buildCarouselItem('Relapse'),
+                  SizedBox(width: 12),
+
+                  _buildCarouselItem('Friendship'),
+                  SizedBox(width: 12),
+
+                  _buildCarouselItem('Christmas'),
+                  SizedBox(width: 12),
+                  // Add content for this stack
+                ],
+              ),
+            ),
+          ),
+
+//section 5
+
+          Positioned(
+            left: 20,
+            top: 370, // Adjust the top position accordingly
+            child: Container(
+              width: 360,
+              height: 300,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    child: Container(
+                      width: 350,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          width: 1,
+                          color: Color(0xFFCCCCCC),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 4),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 254,
+                    top: 6,
+                    child: Container(
+                      width: 90,
+                      height: 22,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 0,
+                            top: 0,
+                            child: Container(
+                              width: 90,
+                              height: 22,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFEFCEFF),
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  width: 1,
+                                  color: Color(0xFF5C00A4),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 16,
+                            top: 3,
+                            child: Text(
+                              'Christmas',
+                              style: TextStyle(
+                                color: Color(0xFF5C00A4),
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 18,
+                    top: 11,
+                    child: Text(
+                      'Demi Cutie   21 Nov',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                        height: 0,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 18,
+                    top: 38,
+                    child: Opacity(
+                      opacity: 0.50,
+                      child: Text(
+                        'layuan nyo star ng pasko ko baka kayo masabit ko hmfpx',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 50,
+                    top: 63,
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(), // Add your decoration here
+                      child: Stack(
+                        children: [
+                          // Add your content for this stack
+                          Center(
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.message,
+                                color: const Color.fromRGBO(92, 0, 164, 1),
+                              ),
+                              iconSize: 20,
+                              onPressed: () {
+                                // Add your onPressed functionality here
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 15,
+                    top: 63,
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(), // Add your decoration here
+                      child: Stack(
+                        children: [
+                          // Add your content for this stack
+                          Center(
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.favorite,
+                                color: const Color.fromRGBO(92, 0, 164, 1),
+                              ),
+                              iconSize: 20,
+                              onPressed: () {
+                                // Add your onPressed functionality here
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCarouselItem(String label) {
+    return Container(
+      width: 110,
+      height: 25,
+      child: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            top: 0,
+            child: Container(
+              width: 100,
+              height: 25,
+              decoration: BoxDecoration(
+                color: Color(0xFFEFCEFF),
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                  width: 1,
+                  color: Color(0xFF5C00A4),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 20,
+            top: 4,
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Color(0xFF5C00A4),
+                fontSize: 14,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500,
+                height: 0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+//
 // PROFILE SETTINGS
 //
 
-class ProfileSettingsPage extends StatelessWidget {
+class ProfileSettingsPage extends StatefulWidget {
+  @override
+  _ProfileSettingsPageState createState() => _ProfileSettingsPageState();
+}
+
+class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    // Implement your Profile Settings page
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile Settings'),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {});
+            },
+            child: Image.asset(
+              "assets/vibby logo.png",
+              width: 50,
+              height: 50,
+            ),
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DiaryPage(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.groups),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VirtualSupportGroupPage(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileSettingsPage(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
-      body: Center(
-        child: Text('Profile Settings Page'),
+      body: Container(
+        color: Color(0xFFF9F9F9),
+        child: ListView(
+          padding: EdgeInsets.only(top: 25),
+          children: [
+            // Profile Picture with Border
+            Center(
+              child: Container(
+                width: 140,
+                height: 140,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Color(0xFF5C00A4),
+                    width: 1,
+                  ),
+                ),
+                child: CircleAvatar(
+                  radius: 70,
+                  backgroundImage: AssetImage('assets/me.jpg'),
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+
+            // User Information Container with special styling for the "Edit" button
+            SpecialProfileInfoContainer(
+              title: 'Name, Username, Birthday, Email, Password',
+              buttonText: 'Edit',
+              onPressed: () {
+                // Implement edit functionality
+              },
+            ),
+
+            // How you use Vibby
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Color(0xFF5C00A4),
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title Text
+                  Text(
+                    'How you use Vibby',
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  // Row for the icons and text
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // First Column (left-aligned)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.notifications),
+                          Icon(Icons.edit),
+                          Icon(Icons.history),
+                        ],
+                      ),
+                      SizedBox(width: 8),
+                      // Second Column (left-aligned)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Notifications'),
+                          Text('Customize'),
+                          Text('Session History'),
+                        ],
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                      // Third Column (right-aligned)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Icon(Icons.chevron_right),
+                          Icon(Icons.chevron_right),
+                          Icon(Icons.chevron_right),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // More info and support
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Color(0xFF5C00A4),
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title Text
+                  Text(
+                    'More info and support',
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  // Row for the icons and text
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // First Column (left-aligned)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.help),
+                          Icon(Icons.info),
+                        ],
+                      ),
+                      SizedBox(width: 8),
+                      // Second Column (left-aligned)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Help'),
+                          Text('About'),
+                        ],
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                      // Third Column (right-aligned)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Icon(Icons.chevron_right),
+                          Icon(Icons.chevron_right),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // Sign Out Button (moved to the bottom)
+            Container(
+              height: 40,
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Implement sign-out functionality
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF5C00A4),
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(5), // Ensure the same radius here
+                  ),
+                ),
+                child: Text('Sign Out', style: TextStyle(color: Colors.white)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SpecialProfileInfoContainer extends StatelessWidget {
+  final String title;
+  final String buttonText;
+  final VoidCallback onPressed;
+
+  const SpecialProfileInfoContainer({
+    required this.title,
+    required this.buttonText,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          color: Color(0xFF5C00A4),
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: SpecialProfileInfoContent(
+        title: title,
+        buttonText: buttonText,
+        onPressed: onPressed,
+      ),
+    );
+  }
+}
+
+class SpecialProfileInfoContent extends StatelessWidget {
+  final String title;
+  final String buttonText;
+  final VoidCallback onPressed;
+
+  const SpecialProfileInfoContent({
+    required this.title,
+    required this.buttonText,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: Stack(
+        children: [
+          // Row for the first two columns
+          Row(
+            children: [
+              // First Column
+              Flexible(
+                flex: 3, // Adjust the flex value as needed
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children:
+                      title.split(', ').map((item) => Text(item)).toList(),
+                ),
+              ),
+              // Space between columns
+              SizedBox(width: 8), // Adjusted the spacing here
+              // Second Column
+              Flexible(
+                flex: 5, // Adjust the flex value as needed
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Maria Joana Mae'),
+                    Text('mariyaA192'),
+                    Text('December 24, 2000'),
+                    Text('mariajoanamae@gmail.com'),
+                    Text('M*************'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          // Edit Button in the third column
+          Positioned(
+            top: 8,
+            right: 8,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Color(0xFF5C00A4),
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: TextButton(
+                onPressed: onPressed,
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                ),
+                child: Text(
+                  buttonText,
+                  style: TextStyle(
+                    color: Color(0xFF5C00A4),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -798,137 +1588,174 @@ class Todo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 150,
-          title: const Text('TO-DO LIST'),
-          centerTitle: true,
-          toolbarTextStyle: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        body: Column(children: <Widget>[
+      appBar: AppBar(
+        toolbarHeight: 130,
+        title: const Text('TO-DO LIST'),
+        centerTitle: true,
+        toolbarTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+      ),
+      body: Column(
+        children: <Widget>[
           CarouselSlider(
             items: [
-              //1st Image of Slider
-              Container(
-                margin: const EdgeInsets.all(6.0),
-                padding: const EdgeInsets.all(
-                    8.0), // Optional: Add padding for better visual appearance
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: const Color.fromARGB(
-                      255, 30, 12, 59), // Set your desired background color
-                ),
-                child: const Center(
-                  child: Text(
-                    'All',
-                    style: TextStyle(
-                      fontSize: 18.0, // Set your desired font size
-                      fontWeight:
-                          FontWeight.bold, // Set your desired font weight
-                      color: Colors.white, // Set your desired text color
+              // 1st Image of Slider
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the new page for the 'All' category
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Todo()),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(6.0),
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: const Color(0xFF370047),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'All',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
               ),
 
-              //2nd Image of Slider
-              Container(
-                margin: const EdgeInsets.all(6.0),
-                padding: const EdgeInsets.all(
-                    8.0), // Optional: Add padding for better visual appearance
-                decoration: BoxDecoration(
+              // 2nd Image of Slider
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the new page for the 'Important' category
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ImportantPage()),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(6.0),
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.white, // Set your desired background color
+                    color: Colors.white,
                     border: Border.all(
                       color: const Color.fromARGB(255, 30, 12, 59),
-                    )),
-                child: const Center(
-                  child: Text(
-                    'Important',
-                    style: TextStyle(
-                      fontSize: 18.0, // Set your desired font size
-                      fontWeight:
-                          FontWeight.bold, // Set your desired font weight
-                      color: Colors.black, // Set your desired text color
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Important',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ),
 
-              //3rd Image of Slider
-              Container(
-                margin: const EdgeInsets.all(6.0),
-                padding: const EdgeInsets.all(
-                    8.0), // Optional: Add padding for better visual appearance
-                decoration: BoxDecoration(
+              // 3rd Image of Slider
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the new page for the 'Org Task' category
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const OrgTask()),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(6.0),
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.white, // Set your desired background color
+                    color: Colors.white,
                     border: Border.all(
                       color: const Color.fromARGB(255, 30, 12, 59),
-                    )),
-                child: const Center(
-                  child: Text(
-                    'Org Task',
-                    style: TextStyle(
-                      fontSize: 18.0, // Set your desired font size
-                      fontWeight:
-                          FontWeight.bold, // Set your desired font weight
-                      color: Colors.black, // Set your desired text color
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Org Task',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ),
 
-              //4th Image of Slider
-              Container(
-                margin: const EdgeInsets.all(6.0),
-                padding: const EdgeInsets.all(
-                    8.0), // Optional: Add padding for better visual appearance
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.white, // Set your desired background color
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 30, 12, 59),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    'My Lectures',
-                    style: TextStyle(
-                      fontSize: 18.0, // Set your desired font size
-                      fontWeight:
-                          FontWeight.bold, // Set your desired font weight
-                      color: Colors.black, // Set your desired text color
-                    ),
-                  ),
-                ),
-              ),
-
-              //5th Image of Slider
-              Container(
-                margin: const EdgeInsets.all(6.0),
-                padding: const EdgeInsets.all(
-                    8.0), // Optional: Add padding for better visual appearance
-                decoration: BoxDecoration(
+              // 4th Image of Slider
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the new page for the 'My Lectures' category
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MyLectures()),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(6.0),
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.white, // Set your desired background color
+                    color: Colors.white,
                     border: Border.all(
                       color: const Color.fromARGB(255, 30, 12, 59),
-                    )),
-                child: const Center(
-                  child: Text(
-                    'Arya\'s List',
-                    style: TextStyle(
-                      fontSize: 18.0, // Set your desired font size
-                      fontWeight:
-                          FontWeight.bold, // Set your desired font weight
-                      color: Colors.black, // Set your desired text color
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'My Lectures',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // 5th Image of Slider
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the new page for the 'Arya's List' category
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MyList()),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(6.0),
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.white,
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 30, 12, 59),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Arya\'s List',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ),
             ],
-
-            //Slider Container properties
             options: CarouselOptions(
               height: 60.0,
               enlargeCenterPage: false,
@@ -940,49 +1767,206 @@ class Todo extends StatelessWidget {
               viewportFraction: 0.35,
             ),
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Card(
-                elevation: 50,
-                shadowColor: Colors.black,
-                margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
-                color: Color.fromARGB(255, 68, 117, 157),
-                child: SizedBox(
-                  width: 150,
-                  height: 200,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
-                    child: Text(
-                      'Important',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ImportantPage()),
+                  );
+                },
+                child: const Card(
+                  elevation: 50,
+                  shadowColor: Colors.black,
+                  margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
+                  color: Color(0xFFBECCFF),
+                  child: SizedBox(
+                    width: 150,
+                    height: 200,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
+                      child: Text(
+                        'Important',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              Card(
-                elevation: 50,
-                shadowColor: Colors.black,
-                margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
-                color: Color.fromARGB(255, 224, 143, 232),
-                child: SizedBox(
-                  width: 150,
-                  height: 200,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
-                    child: Text(
-                      'Org Tasks',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const OrgTask()),
+                  );
+                },
+                child: const Card(
+                  elevation: 50,
+                  shadowColor: Colors.black,
+                  margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
+                  color: Color(0xFF9B829F),
+                  child: SizedBox(
+                    width: 150,
+                    height: 200,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
+                      child: Text(
+                        'Org Tasks',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ],
-          )
-        ]));
+          ),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MyLectures()),
+                  );
+                },
+                child: const Card(
+                  elevation: 50,
+                  shadowColor: Colors.black,
+                  margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
+                  color: Color(0xFFBECCFF),
+                  child: SizedBox(
+                    width: 350,
+                    height: 100,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
+                      child: Text(
+                        'My Lectures',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MyList()),
+                  );
+                },
+                child: const Card(
+                  elevation: 50,
+                  shadowColor: Colors.black,
+                  margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
+                  color: Color(0xFFBECCFF),
+                  child: SizedBox(
+                    width: 350,
+                    height: 100,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
+                      child: Text(
+                        'Arya\'s List',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class EmptyPage extends StatelessWidget {
+  const EmptyPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Empty Page'),
+      ),
+      body: const Center(
+        child: Text('This is an empty page.'),
+      ),
+    );
+  }
+}
+
+class ImportantPage extends StatelessWidget {
+  const ImportantPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Important'),
+      ),
+      body: const Center(
+        child: Text('VERY VERY IMPORTANT ITO.'),
+      ),
+    );
+  }
+}
+
+class OrgTask extends StatelessWidget {
+  const OrgTask({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Organization Tasks'),
+      ),
+      body: const Center(
+        child: Text('TACTICS?!.'),
+      ),
+    );
+  }
+}
+
+class MyLectures extends StatelessWidget {
+  const MyLectures({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Lectures'),
+      ),
+      body: const Center(
+        child: Text('MAMA MO LECTURES.'),
+      ),
+    );
+  }
+}
+
+class MyList extends StatelessWidget {
+  const MyList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Arya\'s List'),
+      ),
+      body: const Center(
+        child: Text('Stark Yaarrrn?.'),
+      ),
+    );
   }
 }

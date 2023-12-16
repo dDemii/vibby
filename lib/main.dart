@@ -14,6 +14,7 @@ class VibbyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Vibby App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -28,6 +29,8 @@ class VibbyApp extends StatelessWidget {
 //
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,60 +192,30 @@ class DiaryPage extends StatefulWidget {
 
 class _DiaryPageState extends State<DiaryPage> {
   int _currentIndex = 0;
+  final Color tabIndicatorColor = Color(0xFF5C00A4);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(
-              left: 15.0), // Adjust the left padding as needed
-          child: GestureDetector(
-            onTap: () {
-              setState(() {});
-            },
-            child: Image.asset(
-              "assets/vibby logo.png", // Replace with your Vibby logo image path
-              width: 50, // Set the width as needed
-              height: 50, // Set the height as needed
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 50,
+              height: 50,
+              child: Image.asset(
+                  'assets/vibby logo.png'), // Replace with your Vibby logo image asset
             ),
-          ),
+            Spacer(), // Spacer to push icons to the right
+            buildTabItem(Icons.home, 0), // Home icon representing Diary
+            SizedBox(width: 15), // Add some space between icons
+            buildTabItem(Icons.groups, 1), // Support Group icon
+            SizedBox(width: 15), // Add some space between icons
+            buildTabItem(Icons.settings, 2), // Settings icon
+          ],
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.home),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DiaryPage(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.groups),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => VirtualSupportGroupPage(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileSettingsPage(),
-                ),
-              );
-            },
-          ),
-        ],
       ),
       body: DiaryContent(),
       bottomNavigationBar: BottomNavigationBar(
@@ -284,10 +257,10 @@ class _DiaryPageState extends State<DiaryPage> {
         selectedFontSize: 12,
         unselectedFontSize: 10,
         iconSize: 20,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
-            label: 'Main',
+            label: 'Diary',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.check),
@@ -296,6 +269,66 @@ class _DiaryPageState extends State<DiaryPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
             label: 'Logs',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildTabItem(IconData icon, int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _currentIndex = index; // Set current index on tab tap
+        });
+        switch (index) {
+          case 0:
+            // Handle navigation to Diary Page
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DiaryPage(),
+              ),
+            );
+            break;
+          case 1:
+            // Handle navigation to Support Group Page
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => VirtualSupportGroupPage(),
+              ),
+            );
+            break;
+          case 2:
+            // Handle navigation to Settings Page
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProfileSettingsPage(),
+              ),
+            );
+            break;
+        }
+      },
+      child: Column(
+        children: [
+          Icon(
+            icon,
+            color: _currentIndex == index
+                ? tabIndicatorColor
+                : Colors.grey, // Highlight color for active icon
+          ),
+          Container(
+            height: 2,
+            width: 30,
+            decoration: BoxDecoration(
+              color: _currentIndex == index
+                  ? tabIndicatorColor
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(2),
+            ),
+            margin: EdgeInsets.only(top: 4),
           ),
         ],
       ),
@@ -376,16 +409,26 @@ class _DiaryContentState extends State<DiaryContent> {
               calendarBuilders: CalendarBuilders(
                 markerBuilder: (context, date, events) {
                   if (moodData[date] != null) {
-                    return Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: Colors.green, // Change color based on mood
-                        shape: BoxShape.circle,
+                    String selectedMood = moodData[date]!;
+
+                    // Map mood labels to respective mood images
+                    Map<String, String> moodImages = {
+                      'Meh': "assets/mood/meh.png",
+                      'Happy': "assets/mood/happy.png",
+                      'Sad': "assets/mood/sad.png",
+                      'Angry': "assets/mood/angry.png",
+                      // Add more mappings for different moods if needed
+                    };
+
+                    return Center(
+                      child: Image.asset(
+                        moodImages[selectedMood]!,
+                        height: 40, // Adjust the size of the image as needed
+                        width: 40,
                       ),
                     );
                   } else {
-                    return Container();
+                    return Container(); // No mood selected for this date
                   }
                 },
               ),
@@ -416,10 +459,17 @@ class _DiaryContentState extends State<DiaryContent> {
 // DIARY ENTRY
 //
 
-class AddDiaryEntryPage extends StatelessWidget {
+class AddDiaryEntryPage extends StatefulWidget {
   final DateTime selectedDate;
 
   AddDiaryEntryPage({required this.selectedDate});
+
+  @override
+  _AddDiaryEntryPageState createState() => _AddDiaryEntryPageState();
+}
+
+class _AddDiaryEntryPageState extends State<AddDiaryEntryPage> {
+  bool _isKeyboardVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -430,39 +480,117 @@ class AddDiaryEntryPage extends StatelessWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.arrow_back), // Replace with Vibby logo if needed
+          child: Icon(Icons.arrow_back),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            DateFormat('EEEE, MMMM d, y').format(selectedDate),
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RawMaterialButton(
+                  onPressed: () {
+                    // Logic for the RawMaterialButton (to perform some action)
+                  },
+                  elevation: 5.0,
+                  fillColor: Colors.white,
+                  shape: CircleBorder(),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.black,
+                    size: 26,
+                  ),
+                  padding: EdgeInsets.all(10.0),
+                ),
+              ],
             ),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: TextFormField(
-              maxLines: 10,
-              decoration: InputDecoration(
-                hintText: 'Enter your diary entry...',
-                border: OutlineInputBorder(),
+            SizedBox(height: 20),
+            Center(
+              child: Text(
+                DateFormat('EEEE, MMMM d, y').format(widget.selectedDate),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Logic to save the diary entry
-              Navigator.of(context).pop();
-            },
-            child: Text('Save Diary Entry'),
-          ),
-        ],
+            SizedBox(height: 20),
+            TextFormField(
+              maxLines: 10,
+              decoration: InputDecoration(
+                hintText: 'Record your day ...',
+                hintStyle: TextStyle(fontStyle: FontStyle.italic),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+              ),
+              onChanged: (value) {
+                // Add your logic when text changes in TextFormField
+              },
+              onTap: () {
+                setState(() {
+                  _isKeyboardVisible = true;
+                });
+              },
+              onEditingComplete: () {
+                setState(() {
+                  _isKeyboardVisible = false;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  // Logic for the ElevatedButton (to save the diary entry)
+                  Navigator.of(context).pop();
+                },
+                child: Text('Save Diary Entry'),
+              ),
+            ),
+            SizedBox(height: 80), // Space for bottom navigation
+          ],
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: _isKeyboardVisible
+          ? BottomAppBar(
+              color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      // Logic for the image icon button
+                    },
+                    icon: Icon(Icons.image),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      // Logic for the alignment icon button
+                    },
+                    icon: Icon(Icons.format_align_left),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      // Logic for the check button
+                    },
+                    icon: Icon(Icons.check),
+                  ),
+                ],
+              ),
+            )
+          : null,
     );
   }
 }

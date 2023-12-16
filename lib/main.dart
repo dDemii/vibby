@@ -236,10 +236,10 @@ class _DiaryPageState extends State<DiaryPage> {
               break;
             case 1:
               // Handle navigation to Diary To-Do Page
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DiaryPage(),
+                  builder: (context) => Todo(),
                 ),
               );
               break;
@@ -293,7 +293,7 @@ class _DiaryPageState extends State<DiaryPage> {
             break;
           case 1:
             // Handle navigation to Support Group Page
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => VirtualSupportGroupPage(),
@@ -1801,7 +1801,7 @@ class PasscodePage extends StatelessWidget {
 //
 //TODO
 //
-/*
+
 class Todo extends StatelessWidget {
   const Todo({super.key});
 
@@ -1811,16 +1811,14 @@ class Todo extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         toolbarHeight: 100,
-        title: const Padding(
-          padding: EdgeInsets.fromLTRB(10, 30, 0, 0),
-          child: Text(
-            'Hello there, Maria Joana Mae',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-            ),
+        title: const Text(
+          'To Do List',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
           ),
         ),
+        centerTitle: true,
       ),
       body: Column(
         children: <Widget>[
@@ -2227,7 +2225,6 @@ class EmptyPage extends StatelessWidget {
   }
 }
 
-
 class ImportantPage extends StatelessWidget {
   const ImportantPage({super.key});
 
@@ -2244,29 +2241,31 @@ class ImportantPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-  child: Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const SizedBox(height: 16.0), // Add some space between the text and the container
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: const TextField(
-            maxLines: 15, // Set the number of lines you want
-            decoration: InputDecoration(
-              hintText: 'Type here...',
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(
+                  height:
+                      16.0), // Add some space between the text and the container
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: const TextField(
+                  maxLines: 15, // Set the number of lines you want
+                  decoration: InputDecoration(
+                    hintText: 'Type here...',
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-      ],
-    ),
-  ),
-),
+      ),
     );
   }
 }
@@ -2310,7 +2309,6 @@ class MyLectures extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.0),
-            // Replace the following with your actual lecture content
             LectureItem(title: 'Introduction to Flutter', date: '2023-01-15'),
             LectureItem(title: 'Advanced Dart Programming', date: '2023-02-01'),
             LectureItem(
@@ -2319,12 +2317,7 @@ class MyLectures extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Handle the logic for adding a new lecture
-          // You can navigate to a new screen or show a dialog for adding lecture details
-          // For now, let's print a message
-          print('Add Lecture button pressed');
-        },
+        onPressed: () {},
         child: const Icon(Icons.add),
       ),
     );
@@ -2413,4 +2406,3 @@ class ImportantCardContent extends StatelessWidget {
     );
   }
 }
-*/

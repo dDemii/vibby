@@ -605,6 +605,27 @@ class VirtualSupportGroupPage extends StatefulWidget {
       _VirtualSupportGroupPageState();
 }
 
+class ConversationPage extends StatelessWidget {
+  final String contactName;
+
+  const ConversationPage({Key? key, required this.contactName})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:
+            Text('$contactName'), // Display the contact's name in the app bar
+      ),
+      body: Center(
+        child: Text(
+            'Conversation with $contactName'), // Placeholder for conversation content
+      ),
+    );
+  }
+}
+
 class _VirtualSupportGroupPageState extends State<VirtualSupportGroupPage> {
   int _currentIndex = 0; // Track the current index of the selected tab
 
@@ -718,85 +739,119 @@ class _VirtualSupportGroupPageState extends State<VirtualSupportGroupPage> {
         children: [
           _buildContactItem(
             name: 'Core Group',
-            image: AssetImage('assets/core.png'), // Replace with image asset
+            image: AssetImage('assets/core.png'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ConversationPage(contactName: 'Core Group')),
+              );
+            },
           ),
           _buildContactItem(
             name: 'Tactics GC',
-            image: AssetImage('assets/tactics.png'), // Replace with image URL
+            image: AssetImage('assets/tactics.png'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ConversationPage(contactName: 'Tactics GC')),
+              );
+            },
           ),
           _buildContactItem(
             name: 'Nadine Beshy',
-            image: AssetImage('assets/nadine.png'), // Replace with image URL
+            image: AssetImage('assets/nadine.png'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ConversationPage(contactName: 'Nadine')),
+              );
+            },
           ),
+
+          // ... INSERT OTHER CONTACTS
         ],
       ),
     );
   }
 
-  Widget _buildContactItem(
-      {required String name, required ImageProvider<Object> image}) {
-    return Container(
-      width: 150,
-      height: 150,
-      child: Stack(
-        children: [
-          Positioned(
-            left: 0,
-            top: 0,
-            child: Container(
-              width: 150,
-              height: 150,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
+  Widget _buildContactItem({
+    required String name,
+    required ImageProvider<Object> image,
+    required Function onTap,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+        width: 150,
+        height: 150,
+        child: Stack(
+          children: [
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    ),
+                  ],
+                  border: Border.all(
+                    width: 1,
+                    color: Color(0xFFCCCCCC),
                   ),
-                ],
-                border: Border.all(
-                  width: 1,
-                  color: Color(0xFFCCCCCC),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            left: 35,
-            top: 110,
-            child: Opacity(
-              opacity: 0.70,
-              child: Text(
-                name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w700,
-                  height: 0,
+            Positioned(
+              left: 35,
+              top: 110,
+              child: Opacity(
+                opacity: 0.70,
+                child: Text(
+                  name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            left: 38,
-            top: 24,
-            child: Container(
-              width: 75,
-              height: 75,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: image,
-                  fit: BoxFit.fill,
+            Positioned(
+              left: 38,
+              top: 24,
+              child: Container(
+                width: 75,
+                height: 75,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: image,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

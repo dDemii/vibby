@@ -239,7 +239,7 @@ class _DiaryPageState extends State<DiaryPage> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Todo(),
+                  builder: (context) => DiaryPage(),
                 ),
               );
               break;
@@ -731,53 +731,107 @@ class _VirtualSupportGroupPageState extends State<VirtualSupportGroupPage> {
 //
 
   Widget _buildContactsSection() {
-    return Container(
-      width: 325,
-      height: 490,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _buildContactItem(
-            name: 'Core Group',
-            image: AssetImage('assets/core.png'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        ConversationPage(contactName: 'Core Group')),
-              );
-            },
-          ),
-          _buildContactItem(
-            name: 'Tactics GC',
-            image: AssetImage('assets/tactics.png'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        ConversationPage(contactName: 'Tactics GC')),
-              );
-            },
-          ),
-          _buildContactItem(
-            name: 'Nadine Beshy',
-            image: AssetImage('assets/nadine.png'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        ConversationPage(contactName: 'Nadine')),
-              );
-            },
-          ),
-
-          // ... INSERT OTHER CONTACTS
-        ],
-      ),
-    );
+    return Padding(
+        padding: EdgeInsets.only(
+            top: 75.0), // Adjust the top padding for spacing from AppBar
+        child: ListView(
+          padding: EdgeInsets.symmetric(
+              horizontal: 30.0), // Horizontal padding for contacts
+          children: [
+            GridView.count(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              padding: EdgeInsets.symmetric(
+                  vertical: 10.0), // Vertical padding around contacts
+              mainAxisSpacing:
+                  10.0, // Adjust the vertical spacing between contacts
+              crossAxisSpacing:
+                  20.0, // Adjust the horizontal spacing between contacts
+              children: [
+                _buildContactItem(
+                  name: 'Core Group',
+                  image: AssetImage('assets/core.png'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ConversationPage(contactName: 'Core Group'),
+                      ),
+                    );
+                  },
+                ),
+                _buildContactItem(
+                  name: 'Tactics GC',
+                  image: AssetImage('assets/tactics.png'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ConversationPage(contactName: 'Tactics GC'),
+                      ),
+                    );
+                  },
+                ),
+                _buildContactItem(
+                  name: 'Nadine Beshy',
+                  image: AssetImage('assets/nadine.png'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ConversationPage(contactName: 'Nadine'),
+                      ),
+                    );
+                  },
+                ),
+                _buildContactItem(
+                  name: 'A Group',
+                  image: AssetImage('assets/a.png'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ConversationPage(contactName: 'A Group'),
+                      ),
+                    );
+                  },
+                ),
+                _buildContactItem(
+                  name: 'B Group',
+                  image: AssetImage('assets/b.png'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ConversationPage(contactName: 'B Group'),
+                      ),
+                    );
+                  },
+                ),
+                _buildContactItem(
+                  name: 'C Group',
+                  image: AssetImage('assets/c.png'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ConversationPage(contactName: 'C Group'),
+                      ),
+                    );
+                  },
+                ),
+                // Add more contact items as needed...
+              ],
+            ),
+          ],
+        ));
   }
 
   Widget _buildContactItem({
@@ -790,64 +844,47 @@ class _VirtualSupportGroupPageState extends State<VirtualSupportGroupPage> {
         onTap();
       },
       child: Container(
-        width: 150,
-        height: 150,
-        child: Stack(
+        width: 75,
+        height: 75,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(0, 4),
+              spreadRadius: 0,
+            ),
+          ],
+          border: Border.all(
+            width: 1,
+            color: Color(0xFFCCCCCC),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Positioned(
-              left: 0,
-              top: 0,
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                  border: Border.all(
-                    width: 1,
-                    color: Color(0xFFCCCCCC),
-                  ),
+            Container(
+              width: 75,
+              height: 75,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: image,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
-            Positioned(
-              left: 35,
-              top: 110,
-              child: Opacity(
-                opacity: 0.70,
-                child: Text(
-                  name,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
-                    height: 0,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 38,
-              top: 24,
-              child: Container(
-                width: 75,
-                height: 75,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: image,
-                    fit: BoxFit.fill,
-                  ),
-                ),
+            SizedBox(height: 15),
+            Text(
+              name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
@@ -1764,7 +1801,7 @@ class PasscodePage extends StatelessWidget {
 //
 //TODO
 //
-
+/*
 class Todo extends StatelessWidget {
   const Todo({super.key});
 
@@ -1772,182 +1809,195 @@ class Todo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 130,
-        title: const Text('TO-DO LIST'),
-        centerTitle: true,
-        toolbarTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+        backgroundColor: Colors.transparent,
+        toolbarHeight: 100,
+        title: const Padding(
+          padding: EdgeInsets.fromLTRB(10, 30, 0, 0),
+          child: Text(
+            'Hello there, Maria Joana Mae',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: <Widget>[
-          CarouselSlider(
-            items: [
-              // 1st Image of Slider
-              GestureDetector(
-                onTap: () {
-                  // Navigate to the new page for the 'All' category
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Todo()),
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(6.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: const Color(0xFF370047),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'All',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+          SizedBox(
+            width: 360,
+            child: CarouselSlider(
+              items: [
+                // 1st Image of Slider
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to the new page for the 'All' category
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Todo()),
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(10, 6, 6, 6),
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: const Color(0xFF370047),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'All',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
 
-              // 2nd Image of Slider
-              GestureDetector(
-                onTap: () {
-                  // Navigate to the new page for the 'Important' category
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ImportantPage()),
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(6.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.white,
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 30, 12, 59),
+                // 2nd Image of Slider
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to the new page for the 'Important' category
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ImportantPage()),
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(10, 6, 6, 6),
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Colors.white,
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 30, 12, 59),
+                      ),
                     ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Important',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                    child: const Center(
+                      child: Text(
+                        'Important',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
 
-              // 3rd Image of Slider
-              GestureDetector(
-                onTap: () {
-                  // Navigate to the new page for the 'Org Task' category
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const OrgTask()),
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(6.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.white,
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 30, 12, 59),
+                // 3rd Image of Slider
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to the new page for the 'Org Task' category
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const OrgTask()),
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(10, 6, 6, 6),
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Colors.white,
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 30, 12, 59),
+                      ),
                     ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Org Task',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                    child: const Center(
+                      child: Text(
+                        'Org Task',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
 
-              // 4th Image of Slider
-              GestureDetector(
-                onTap: () {
-                  // Navigate to the new page for the 'My Lectures' category
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MyLectures()),
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(6.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.white,
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 30, 12, 59),
+                // 4th Image of Slider
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to the new page for the 'My Lectures' category
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyLectures()),
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(10, 6, 6, 6),
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Colors.white,
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 30, 12, 59),
+                      ),
                     ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'My Lectures',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                    child: const Center(
+                      child: Text(
+                        'Lectures',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
 
-              // 5th Image of Slider
-              GestureDetector(
-                onTap: () {
-                  // Navigate to the new page for the 'Arya's List' category
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MyList()),
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(6.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.white,
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 30, 12, 59),
+                // 5th Image of Slider
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to the new page for the 'Arya's List' category
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MyList()),
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(10, 6, 6, 6),
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Colors.white,
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 30, 12, 59),
+                      ),
                     ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Arya\'s List',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                    child: const Center(
+                      child: Text(
+                        'Arya\'s List',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
                 ),
+              ],
+              options: CarouselOptions(
+                height: 60.0,
+                enlargeCenterPage: false,
+                autoPlay: false,
+                aspectRatio: 16 / 9,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enableInfiniteScroll: true,
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                viewportFraction: 0.34,
+                initialPage: 1,
               ),
-            ],
-            options: CarouselOptions(
-              height: 60.0,
-              enlargeCenterPage: false,
-              autoPlay: false,
-              aspectRatio: 16 / 9,
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enableInfiniteScroll: false,
-              autoPlayAnimationDuration: const Duration(milliseconds: 800),
-              viewportFraction: 0.35,
             ),
           ),
           Row(
@@ -1961,21 +2011,86 @@ class Todo extends StatelessWidget {
                         builder: (context) => const ImportantPage()),
                   );
                 },
-                child: const Card(
+                child: Card(
                   elevation: 50,
-                  shadowColor: Colors.black,
-                  margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
-                  color: Color(0xFFBECCFF),
+                  shadowColor: Colors.white,
+                  margin: const EdgeInsets.fromLTRB(5, 10, 0, 5),
+                  color: const Color(0xFF8E9CD5),
                   child: SizedBox(
-                    width: 150,
+                    width: 180,
                     height: 200,
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
-                      child: Text(
-                        'Important',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 5, 5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Center(
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.horizontal_rule_rounded,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              const Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        right: 15), // Adjust the padding here
+                                    child: Text(
+                                      'Important',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 0), // Adjust the padding here
+                                    child: Text(
+                                      'Updated 2h ago',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(width: 20),
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: const BoxDecoration(
+                                  color: Color(
+                                      0xFFA6B7F7), // Choose your desired background color
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.star,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Buy Food'),
+                                  Text('Invest'),
+                                  Text('Deposit Money'),
+                                  Text('Gym'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -1990,19 +2105,41 @@ class Todo extends StatelessWidget {
                 },
                 child: const Card(
                   elevation: 50,
-                  shadowColor: Colors.black,
-                  margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
-                  color: Color(0xFF9B829F),
+                  shadowColor: Colors.white,
+                  margin: EdgeInsets.fromLTRB(0, 10, 5, 5),
+                  color: Color(0xFFBB9CC0),
                   child: SizedBox(
-                    width: 150,
+                    width: 140,
                     height: 200,
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
-                      child: Text(
-                        'Org Tasks',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Org Tasks',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '11/08/2023',
+                          ),
+                          SizedBox(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Permits'),
+                                  Text('IGPs'),
+                                  Text('Photoshoot'),
+                                  Text('Budget'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -2021,14 +2158,14 @@ class Todo extends StatelessWidget {
                 },
                 child: const Card(
                   elevation: 50,
-                  shadowColor: Colors.black,
+                  shadowColor: Colors.white,
                   margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
                   color: Color(0xFFBECCFF),
                   child: SizedBox(
                     width: 350,
                     height: 100,
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
+                      padding: EdgeInsets.all(40),
                       child: Text(
                         'My Lectures',
                         style: TextStyle(
@@ -2048,14 +2185,14 @@ class Todo extends StatelessWidget {
                 },
                 child: const Card(
                   elevation: 50,
-                  shadowColor: Colors.black,
+                  shadowColor: Colors.white,
                   margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
                   color: Color(0xFFBECCFF),
                   child: SizedBox(
                     width: 350,
                     height: 100,
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
+                      padding: EdgeInsets.all(40),
                       child: Text(
                         'Arya\'s List',
                         style: TextStyle(
@@ -2090,6 +2227,7 @@ class EmptyPage extends StatelessWidget {
   }
 }
 
+
 class ImportantPage extends StatelessWidget {
   const ImportantPage({super.key});
 
@@ -2097,11 +2235,38 @@ class ImportantPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        toolbarHeight: 100,
         title: const Text('Important'),
+        toolbarTextStyle: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+        centerTitle: true,
       ),
-      body: const Center(
-        child: Text('VERY VERY IMPORTANT ITO.'),
-      ),
+      body: SingleChildScrollView(
+  child: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SizedBox(height: 16.0), // Add some space between the text and the container
+        Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: const TextField(
+            maxLines: 15, // Set the number of lines you want
+            decoration: InputDecoration(
+              hintText: 'Type here...',
+            ),
+          ),
+        ),
+      ],
+    ),
+  ),
+),
     );
   }
 }
@@ -2123,7 +2288,7 @@ class OrgTask extends StatelessWidget {
 }
 
 class MyLectures extends StatelessWidget {
-  const MyLectures({super.key});
+  const MyLectures({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -2131,8 +2296,67 @@ class MyLectures extends StatelessWidget {
       appBar: AppBar(
         title: const Text('My Lectures'),
       ),
-      body: const Center(
-        child: Text('MAMA MO LECTURES.'),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: 50.0),
+            Text(
+              'List of Your Lectures:',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20.0),
+            // Replace the following with your actual lecture content
+            LectureItem(title: 'Introduction to Flutter', date: '2023-01-15'),
+            LectureItem(title: 'Advanced Dart Programming', date: '2023-02-01'),
+            LectureItem(
+                title: 'State Management in Flutter', date: '2023-02-15'),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Handle the logic for adding a new lecture
+          // You can navigate to a new screen or show a dialog for adding lecture details
+          // For now, let's print a message
+          print('Add Lecture button pressed');
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class LectureItem extends StatelessWidget {
+  final String title;
+  final String date;
+
+  const LectureItem({
+    required this.title,
+    required this.date,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 5.0,
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      child: ListTile(
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Text('Date: $date'),
+        onTap: () {
+          // Add your navigation logic here if needed
+        },
       ),
     );
   }
@@ -2153,3 +2377,40 @@ class MyList extends StatelessWidget {
     );
   }
 }
+
+class ImportantCardContent extends StatelessWidget {
+  const ImportantCardContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Important',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          'Update 2h ago',
+        ),
+        SizedBox(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(10, 20, 5, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Buy Food'),
+                Text('Invest'),
+                Text('Deposit Money'),
+                Text('Gym'),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+*/

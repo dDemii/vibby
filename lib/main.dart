@@ -1157,116 +1157,207 @@ class FindGroupsContent extends StatelessWidget {
       height: 932,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(color: Color(0xFFF8F8F8)),
-      child: Stack(
-        children: [
-          _buildGroup(
-            imagePath: 'assets/exo.png',
-            groupName: 'Kpop',
-            leftPosition: 28,
-            topPosition: 100,
-          ),
-          _buildGroup(
-            imagePath: 'assets/kn.jpg',
-            groupName: 'KathNiel',
-            leftPosition: 28,
-            topPosition: 280,
-          ),
-          _buildGroup(
-            imagePath: 'assets/unecs.jpg',
-            groupName: 'UNECS',
-            leftPosition: 200,
-            topPosition: 280,
-          ),
-          _buildGroup(
-            imagePath: 'assets/unecs.jpg',
-            groupName: 'UNECS',
-            leftPosition: 28,
-            topPosition: 280,
-          ),
-        ],
+      child: SingleChildScrollView(
+        padding: EdgeInsets.only(top: 50, left: 20, right: 20),
+        child: GridView.count(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          crossAxisCount: 2,
+          children: [
+            _buildGroup(
+              imagePath: 'assets/exo.png',
+              groupName: 'Kpop',
+              context: context,
+            ),
+            _buildGroup(
+              imagePath: 'assets/kn.jpg',
+              groupName: 'KathNiel',
+              context: context,
+            ),
+            _buildGroup(
+              imagePath: 'assets/unecs.jpg',
+              groupName: 'UNECS',
+              context: context,
+            ),
+            _buildGroup(
+              imagePath: 'assets/bits.png',
+              groupName: 'BITS',
+              context: context,
+            ),
+            _buildGroup(
+              imagePath: 'assets/aldub.jpg',
+              groupName: 'Aldub Nation',
+              context: context,
+            ),
+            _buildGroup(
+              imagePath: 'assets/franseth.jpg',
+              groupName: 'FranSeth',
+              context: context,
+            ),
+            // Add other groups as needed
+          ],
+        ),
       ),
     );
   }
 
-  Positioned _buildGroup({
+  Widget _buildGroup({
     required String imagePath,
     required String groupName,
-    required double leftPosition,
-    required double topPosition,
+    required BuildContext context,
   }) {
-    return Positioned(
-      left: leftPosition,
-      top: topPosition,
-      child: Container(
-        width: 150,
-        height: 150,
-        child: Stack(
-          children: [
-            Positioned(
-              left: 0,
-              top: 0,
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: ShapeDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(imagePath),
-                    fit: BoxFit.fill,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      width: 1,
-                      color: Color(0xFFCCCCCC),
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-              ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GroupDescription(
+              groupName: groupName,
+              imagePath: imagePath,
             ),
-            Positioned(
-              left: 0,
-              top: 126,
-              child: Container(
-                width: 150,
-                height: 24,
-                decoration: ShapeDecoration(
-                  color: Color(0xFFF8F8F8),
-                  shape: RoundedRectangleBorder(
+          ),
+        );
+      },
+      child: Container(
+        width: 100,
+        height: 100,
+        margin: EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(0, 4),
+              spreadRadius: 0,
+            ),
+          ],
+          image: DecorationImage(
+            image: AssetImage(imagePath),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Stack(
+            children: [
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF8F8F8),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     ),
+                    border: Border(
+                      top: BorderSide(
+                        width: 1,
+                        color: Color(0xFFCCCCCC),
+                      ),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      groupName,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        height: 1.2,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              left: 60,
-              top: 130,
-              child: Opacity(
-                opacity: 0.70,
-                child: Text(
-                  groupName,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                    height: 0,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class GroupDescription extends StatelessWidget {
+  final String groupName;
+  final String imagePath;
+
+  const GroupDescription({
+    Key? key,
+    required this.groupName,
+    required this.imagePath,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Group Description'),
+      ),
+      body: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(
+                imagePath,
+                width: double.infinity,
+                height: 300,
+                fit: BoxFit.fill,
+              ),
+              SizedBox(height: 20),
+              Text(
+                groupName,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Description of $groupName goes here...', // Add actual description
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              SizedBox(height: 30),
+              Container(
+                width: double.infinity,
+                height: 40,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  color: Color(0xFF5B00A4),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    // Implement your logic here when the button is pressed
+                  },
+                  child: Text(
+                    'Add to My Contacts',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -1372,7 +1463,11 @@ class ForumContent extends StatelessWidget {
                               ),
                               iconSize: 50,
                               onPressed: () {
-                                // Add your onPressed functionality here
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PostPage()),
+                                );
                               },
                             ),
                           ),
@@ -1719,6 +1814,520 @@ class ForumContent extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class PostPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(),
+              SizedBox(height: 20),
+              _buildPostContent(),
+              SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Create a Post',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        SizedBox(height: 10),
+        Text(
+          'You are not going through this alone. The community is always here to support you.',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPostContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 350,
+          height: 490,
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  width: 350,
+                  height: 490,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        child: Container(
+                          width: 350,
+                          height: 490,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFFEFCEFF),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 1,
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                                color: Color(0xFF5C00A4),
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            shadows: [
+                              BoxShadow(
+                                color: Color(0x3F000000),
+                                blurRadius: 4,
+                                offset: Offset(0, 4),
+                                spreadRadius: 0,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 25,
+                        top: 14.43,
+                        child: SizedBox(
+                          width: 300,
+                          height: 36.91,
+                          child: Text(
+                            'Care to share some thoughts?',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF200D3C),
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 230.81,
+                        top: 310.92,
+                        child: Container(
+                          width: 94.59,
+                          height: 22.30,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 0,
+                                top: 0,
+                                child: Container(
+                                  width: 94.59,
+                                  height: 22.30,
+                                  decoration: ShapeDecoration(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(
+                                        width: 1,
+                                        strokeAlign:
+                                            BorderSide.strokeAlignOutside,
+                                        color: Color(0xFF5C00A4),
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 20.19,
+                                top: 3.08,
+                                child: SizedBox(
+                                  width: 53,
+                                  height: 15,
+                                  child: Text(
+                                    'Relapse',
+                                    style: TextStyle(
+                                      color: Color(0xFF5C00A4),
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 118.24,
+                        top: 348.38,
+                        child: Container(
+                          width: 94.59,
+                          height: 22.30,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 0,
+                                top: 0,
+                                child: Container(
+                                  width: 94.59,
+                                  height: 22.30,
+                                  decoration: ShapeDecoration(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(
+                                        width: 1,
+                                        strokeAlign:
+                                            BorderSide.strokeAlignOutside,
+                                        color: Color(0xFF5C00A4),
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 11.76,
+                                top: 3.62,
+                                child: SizedBox(
+                                  width: 71.17,
+                                  height: 15.40,
+                                  child: Text(
+                                    'Friendship',
+                                    style: TextStyle(
+                                      color: Color(0xFF5C00A4),
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 230.81,
+                        top: 348.38,
+                        child: Container(
+                          width: 94.59,
+                          height: 22.30,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 0,
+                                top: 0,
+                                child: Container(
+                                  width: 94.59,
+                                  height: 22.30,
+                                  decoration: ShapeDecoration(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(
+                                        width: 1,
+                                        strokeAlign:
+                                            BorderSide.strokeAlignOutside,
+                                        color: Color(0xFF5C00A4),
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 12.19,
+                                top: 3.62,
+                                child: SizedBox(
+                                  width: 69,
+                                  height: 15,
+                                  child: Text(
+                                    'Christmas',
+                                    style: TextStyle(
+                                      color: Color(0xFF5C00A4),
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 118.24,
+                        top: 384.05,
+                        child: Container(
+                          width: 207.16,
+                          height: 22.30,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 0,
+                                top: 0,
+                                child: Container(
+                                  width: 207.16,
+                                  height: 22.30,
+                                  decoration: ShapeDecoration(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(
+                                        width: 1,
+                                        strokeAlign:
+                                            BorderSide.strokeAlignOutside,
+                                        color: Color(0xFF5C00A4),
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 31.76,
+                                top: 2.95,
+                                child: SizedBox(
+                                  width: 144.67,
+                                  height: 15.40,
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Others: ',
+                                          style: TextStyle(
+                                            color: Color(0xFF5C00A4),
+                                            fontSize: 14,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
+                                            height: 0,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'Type it here...',
+                                          style: TextStyle(
+                                            color: Color(0xFF5C00A4),
+                                            fontSize: 14,
+                                            fontStyle: FontStyle.italic,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
+                                            height: 0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 104.05,
+                top: 42.81,
+                child: Container(
+                  width: 141.89,
+                  height: 133.78,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/share.png"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 32.67,
+                top: 177.10,
+                child: Container(
+                  width: 283.78,
+                  height: 110,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        child: Container(
+                          width: 283.78,
+                          height: 110,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFFF8EBFF),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 1,
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                                color: Color(0xFF5C00A4),
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            shadows: [
+                              BoxShadow(
+                                color: Color(0x3F000000),
+                                blurRadius: 4,
+                                offset: Offset(0, 4),
+                                spreadRadius: 0,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 17.50,
+                        top: 33,
+                        child: SizedBox(
+                          width: 239.32,
+                          height: 44,
+                          child: Opacity(
+                            opacity: 0.50,
+                            child: Text(
+                              'Type to describe and share your thoughts...',
+                              style: TextStyle(
+                                color: Color(0xFF200D3C),
+                                fontSize: 14,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 118.24,
+                top: 310.92,
+                child: Container(
+                  width: 94.59,
+                  height: 22.30,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        child: Container(
+                          width: 94.59,
+                          height: 22.30,
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 1,
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                                color: Color(0xFF5C00A4),
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 16.76,
+                        top: 3.08,
+                        child: SizedBox(
+                          width: 60,
+                          height: 15,
+                          child: Text(
+                            'Trending',
+                            style: TextStyle(
+                              color: Color(0xFF5C00A4),
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 32.67,
+                top: 310.80,
+                child: SizedBox(
+                  width: 71.17,
+                  height: 17.60,
+                  child: Text(
+                    'Add tags',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                      height: 0,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 23.65,
+                top: 428,
+                child: Container(
+                  width: 302.70,
+                  height: 35.68,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: ShapeDecoration(
+                    color: Color(0xFF5B00A4),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Publish now',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

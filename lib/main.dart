@@ -263,10 +263,10 @@ class _DiaryPageState extends State<DiaryPage> {
               break;
             case 2:
               // Handle navigation to Diary Logs Page
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DiaryPage(),
+                  builder: (context) => Logs(),
                 ),
               );
               break;
@@ -1825,14 +1825,14 @@ class PostPage extends StatelessWidget {
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          padding: const EdgeInsets.fromLTRB(30, 1, 30, 1),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeader(),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               _buildPostContent(),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
             ],
           ),
         ),
@@ -1853,7 +1853,7 @@ class PostPage extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 2),
         Text(
           'You are not going through this alone. The community is always here to support you.',
           style: TextStyle(
@@ -2171,52 +2171,46 @@ class PostPage extends StatelessWidget {
                 child: Container(
                   width: 283.78,
                   height: 110,
+                  decoration: ShapeDecoration(
+                    color: Color(0xFFF8EBFF),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 1,
+                        strokeAlign: BorderSide.strokeAlignOutside,
+                        color: Color(0xFF5C00A4),
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
                   child: Stack(
                     children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                          width: 283.78,
-                          height: 110,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFF8EBFF),
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 1,
-                                strokeAlign: BorderSide.strokeAlignOutside,
-                                color: Color(0xFF5C00A4),
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            shadows: [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
                       Positioned(
                         left: 17.50,
                         top: 33,
                         child: SizedBox(
                           width: 239.32,
                           height: 44,
-                          child: Opacity(
-                            opacity: 0.50,
-                            child: Text(
-                              'Type to describe and share your thoughts...',
-                              style: TextStyle(
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText:
+                                  'Type to describe and share your thoughts...',
+                              hintStyle: TextStyle(
                                 color: Color(0xFF200D3C),
                                 fontSize: 14,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w500,
-                                height: 0,
                               ),
+                              border: InputBorder.none,
+                              filled: true,
+                              fillColor: Colors.transparent,
                             ),
                           ),
                         ),
@@ -2240,7 +2234,7 @@ class PostPage extends StatelessWidget {
                           width: 94.59,
                           height: 22.30,
                           decoration: ShapeDecoration(
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 255, 255, 255),
                             shape: RoundedRectangleBorder(
                               side: BorderSide(
                                 width: 1,
@@ -2293,34 +2287,42 @@ class PostPage extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 23.65,
+                left: 0,
+                right: 0,
                 top: 428,
-                child: Container(
-                  width: 302.70,
-                  height: 35.68,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFF5B00A4),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Publish now',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
+                child: Center(
+                  child: SizedBox(
+                    width: 302.70, // Adjust the width as needed
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Add functionality to execute when the button is pressed
+                        // For example, publish the message or perform an action
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
+                        primary: Color(0xFF5B00A4),
                       ),
-                    ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Publish now',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -2926,7 +2928,7 @@ class Todo extends StatelessWidget {
                     width: 180,
                     height: 200,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 5, 5),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 5, 5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -3026,6 +3028,7 @@ class Todo extends StatelessWidget {
                             'Org Tasks',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
                           ),
                           Text(
@@ -3066,18 +3069,28 @@ class Todo extends StatelessWidget {
                   elevation: 50,
                   shadowColor: Colors.white,
                   margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
-                  color: Color(0xFFBECCFF),
+                  color: Color(0xFF8E9CD5),
                   child: SizedBox(
                     width: 350,
-                    height: 100,
-                    child: Padding(
-                      padding: EdgeInsets.all(40),
-                      child: Text(
-                        'My Lectures',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                    height: 90,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Lectures',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                ),
+                              ),
+                              Text('08/25/2023')
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
@@ -3093,18 +3106,28 @@ class Todo extends StatelessWidget {
                   elevation: 50,
                   shadowColor: Colors.white,
                   margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
-                  color: Color(0xFFBECCFF),
+                  color: Color(0xFFE7BCDE),
                   child: SizedBox(
                     width: 350,
-                    height: 100,
-                    child: Padding(
-                      padding: EdgeInsets.all(40),
-                      child: Text(
-                        'Arya\'s List',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                    height: 90,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Arya\'s List',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                ),
+                              ),
+                              Text('08/20/2023')
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
@@ -3117,24 +3140,8 @@ class Todo extends StatelessWidget {
   }
 }
 
-class EmptyPage extends StatelessWidget {
-  const EmptyPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Empty Page'),
-      ),
-      body: const Center(
-        child: Text('This is an empty page.'),
-      ),
-    );
-  }
-}
-
 class ImportantPage extends StatelessWidget {
-  const ImportantPage({super.key});
+  const ImportantPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -3148,28 +3155,29 @@ class ImportantPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: Card(
+        color: Color(0xFF8E9CD5), // Set the background color to blue
+        margin: const EdgeInsets.all(
+            20.0), // Add margin for better visual appearance
+        child: SizedBox(
+          height: 200,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(
-                  height:
-                      16.0), // Add some space between the text and the container
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: const TextField(
-                  maxLines: 15, // Set the number of lines you want
-                  decoration: InputDecoration(
-                    hintText: 'Type here...',
-                  ),
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [
+              Text(
+                'Things to do',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
+              // Add your list items here
+              ListItem(text: 'Buy Food'),
+              ListItem(text: 'Invest'),
+              ListItem(text: 'Deposit Money'),
+              ListItem(text: 'Gym'),
+              // Add more items as needed
             ],
           ),
         ),
@@ -3179,7 +3187,7 @@ class ImportantPage extends StatelessWidget {
 }
 
 class OrgTask extends StatelessWidget {
-  const OrgTask({super.key});
+  const OrgTask({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -3187,8 +3195,57 @@ class OrgTask extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Organization Tasks'),
       ),
-      body: const Center(
-        child: Text('TACTICS?!.'),
+      body: Card(
+        color: const Color(0xFF8E9CD5),
+        margin: const EdgeInsets.all(
+            20.0), // Add margin for better visual appearance
+        child: SizedBox(
+          height: 250,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [
+              SizedBox(
+                child: Text(
+                  'TACTICS',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+              OrgTaskItem(text: 'Permits'),
+              OrgTaskItem(text: 'IGPs'),
+              OrgTaskItem(text: 'Photoshoot'),
+              OrgTaskItem(text: 'Budget'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class OrgTaskItem extends StatelessWidget {
+  final String text;
+
+  const OrgTaskItem({Key? key, required this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start, // Left-align the items
+        children: [
+          Icon(Icons
+              .check_box_outline_blank), // You can use your own checkbox icon
+          SizedBox(width: 8),
+          Text(
+            text,
+            style: TextStyle(fontSize: 17),
+          ),
+        ],
       ),
     );
   }
@@ -3202,6 +3259,7 @@ class MyLectures extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Lectures'),
+        centerTitle: true,
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),
@@ -3217,6 +3275,7 @@ class MyLectures extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.0),
+            // Replace the following with your actual lecture content
             LectureItem(title: 'Introduction to Flutter', date: '2023-01-15'),
             LectureItem(title: 'Advanced Dart Programming', date: '2023-02-01'),
             LectureItem(
@@ -3225,7 +3284,11 @@ class MyLectures extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          // Handle the logic for adding a new lecture
+          // You can navigate to a new screen or show a dialog for adding lecture details
+          // For now, let's print a message
+        },
         child: const Icon(Icons.add),
       ),
     );
@@ -3264,16 +3327,59 @@ class LectureItem extends StatelessWidget {
 }
 
 class MyList extends StatelessWidget {
-  const MyList({super.key});
+  const MyList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Arya\'s List'),
+        centerTitle: true,
       ),
-      body: const Center(
-        child: Text('Stark Yaarrrn?.'),
+      body: Card(
+        color: Colors.blue, // Set the background color to blue
+        margin: const EdgeInsets.all(
+            20.0), // Add margin for better visual appearance
+        child: SizedBox(
+          height: 200,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [
+              SizedBox(height: 0),
+              // Add your list items here
+              ListItem(text: 'Cersei Lannister'),
+              ListItem(text: 'Walder Frey'),
+              ListItem(text: 'The Mountain'),
+              ListItem(text: 'Joffrey Baratheon'),
+              // Add more items as needed
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ListItem extends StatelessWidget {
+  final String text;
+
+  const ListItem({Key? key, required this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Icon(Icons
+              .check_box_outline_blank), // You can use your own checkbox icon
+          SizedBox(width: 8),
+          Text(
+            text,
+            style: TextStyle(fontSize: 16),
+          ),
+        ],
       ),
     );
   }
@@ -3311,6 +3417,260 @@ class ImportantCardContent extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class Logs extends StatelessWidget {
+  const Logs({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        toolbarHeight: 100,
+        title: const Text(
+          'Logs',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: Scrollbar(
+        thumbVisibility: true,
+        thickness: 1,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Card(
+                elevation: 50,
+                shadowColor: Colors.white,
+                color: Color(0xFFD6EDD0),
+                child: SizedBox(
+                  width: 390,
+                  height: 110,
+                  child: Padding(
+                    padding: EdgeInsets.all(5), // Adjust padding as needed
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Image widget goes here
+                        Column(
+                          children: [
+                            Column(
+                              children: [
+                                Image.asset(
+                                  'assets/mood/meh.png',
+                                  width:
+                                      50, // Adjust the width of the image as needed
+                                  height:
+                                      50, // Adjust the height of the image as needed
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            // Container to wrap the text
+                            Container(
+                              width: 350,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Color(0xFF9DE08B),
+                              ),
+                              padding: EdgeInsets.all(
+                                  8.0), // Adjust padding as needed
+                              child: Center(
+                                child: Text(
+                                  'Saturday, December 25, 2023',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 50,
+                shadowColor: Colors.white,
+                color: Color(0xFFF4F4E2),
+                child: SizedBox(
+                  width: 390,
+                  height: 110,
+                  child: Padding(
+                    padding: EdgeInsets.all(5), // Adjust padding as needed
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Image widget goes here
+                        Column(
+                          children: [
+                            Image.asset(
+                              'assets/mood/happy.png',
+                              width:
+                                  50, // Adjust the width of the image as needed
+                              height:
+                                  50, // Adjust the height of the image as needed
+                            ),
+                            SizedBox(
+                                height:
+                                    10), // Add some space between the image and text
+                            // Container to wrap the text
+                            Container(
+                              width: 350,
+                              decoration: BoxDecoration(
+                                // You can customize the container's decoration
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Color(0xFFFFE7AA),
+                              ),
+                              padding: EdgeInsets.all(
+                                  8.0), // Adjust padding as needed
+                              child: Center(
+                                child: Text(
+                                  'Wednesday, December 6, 2023',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 50,
+                shadowColor: Colors.white,
+                color: Color(0xFFE2E9F4),
+                child: SizedBox(
+                  width: 390,
+                  height: 110,
+                  child: Padding(
+                    padding: EdgeInsets.all(5), // Adjust padding as needed
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Image widget goes here
+                        Column(
+                          children: [
+                            Image.asset(
+                              'assets/mood/sad.png',
+                              width:
+                                  50, // Adjust the width of the image as needed
+                              height:
+                                  50, // Adjust the height of the image as needed
+                            ),
+                            SizedBox(
+                                height:
+                                    10), // Add some space between the image and text
+                            // Container to wrap the text
+                            Container(
+                              width: 350,
+                              decoration: BoxDecoration(
+                                // You can customize the container's decoration
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Color(0xFFAAD1FF),
+                              ),
+                              padding: EdgeInsets.all(
+                                  8.0), // Adjust padding as needed
+                              child: Center(
+                                child: Text(
+                                  'Friday, December 1, 2023',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 50,
+                shadowColor: Colors.white,
+                color: Color(0xFFF4E3E2),
+                child: SizedBox(
+                  width: 390,
+                  height: 350, // Adjust the height as needed
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Image widget and Container go here
+                        Container(
+                          width: 350,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Color(0xFFFFAFAA),
+                          ),
+                          padding: EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Image widget
+                              Image.asset(
+                                'assets/mood/angry.png',
+                                width: 30,
+                                height: 30,
+                              ),
+                              SizedBox(
+                                  width:
+                                      5), // Add some space between the image and text
+                              // Text inside the Container
+                              Text(
+                                'Saturday, December 25, 2023',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                            height: 5), // Add some space between the content
+                        // Image widget
+                        Image.asset(
+                          'assets/coffee.jpg',
+                          width: 350,
+                          height: 200,
+                        ),
+                        SizedBox(
+                            height:
+                                0), // Add some space between the image and text
+                        // Text
+                        Center(
+                          child: const Text(
+                            'today, i spilled my coffee on my laptop. \ni was so angry because i couldnt fix my \nlaptop anymore',
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

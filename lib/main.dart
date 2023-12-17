@@ -108,42 +108,60 @@ class MoodSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20.0),
+        topRight: Radius.circular(20.0),
+      ),
+      child: Container(
         width: double.infinity,
         height: 450,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(color: Color(0xFFF8F8F8)),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          SizedBox(height: 20),
-          Text(
-            'How are you feeling today?',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w400,
-              fontFamily: 'Poppins',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 30),
+            Text(
+              'How are you feeling today?',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Poppins',
+              ),
             ),
-          ),
-          SizedBox(height: 20),
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 20.0,
-            runSpacing: 20.0,
-            children: List.generate(
-              moodImages.length,
-              (index) => _buildMoodItem(moodImages[index], moodLabels[index]),
+            SizedBox(height: 20), // Adjusted spacing
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildMoodItem(moodImages[0], moodLabels[0]),
+                SizedBox(width: 40), // Adjusted spacing
+                _buildMoodItem(moodImages[1], moodLabels[1]),
+              ],
             ),
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the bottom sheet
-            },
-            child: Text('Save Mood'),
-          ),
-          SizedBox(height: 20),
-        ]));
+            SizedBox(height: 25), // Adjusted spacing
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildMoodItem(moodImages[2], moodLabels[2]),
+                SizedBox(width: 40), // Adjusted spacing
+                _buildMoodItem(moodImages[3], moodLabels[3]),
+              ],
+            ),
+            SizedBox(height: 10), // Adjusted spacing
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the bottom sheet
+              },
+              child: Text('Save Mood'),
+            ),
+            SizedBox(height: 10), // Adjusted spacing
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildMoodItem(String imagePath, String label) {
@@ -470,128 +488,187 @@ class AddDiaryEntryPage extends StatefulWidget {
 
 class _AddDiaryEntryPageState extends State<AddDiaryEntryPage> {
   bool _isKeyboardVisible = false;
+  TextEditingController _textEditingController = TextEditingController();
+  late DateTime _selectedDate;
+  bool _isTextCentered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = widget.selectedDate;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Diary Entry'),
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back),
+    return GestureDetector(
+      onTap: () {
+        // Dismiss the keyboard when tapping outside the text field
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Add Diary Entry'),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back),
+          ),
         ),
-      ),
-      resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        resizeToAvoidBottomInset: true,
+        body: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RawMaterialButton(
-                  onPressed: () {
-                    // Logic for the RawMaterialButton (to perform some action)
-                  },
-                  elevation: 5.0,
-                  fillColor: Colors.white,
-                  shape: CircleBorder(),
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.black,
-                    size: 26,
-                  ),
-                  padding: EdgeInsets.all(10.0),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Center(
-              child: Text(
-                DateFormat('EEEE, MMMM d, y').format(widget.selectedDate),
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(vertical: 50, horizontal: 17),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: 7.0), // Adjust the value as needed
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RawMaterialButton(
+                            onPressed: () {
+                              // Logic for the CIRCLE button (to perform some action)
+                            },
+                            elevation: 2.5,
+                            fillColor: Colors.white,
+                            shape: CircleBorder(),
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            padding: EdgeInsets.all(10.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            DateFormat('EEEE, MMMM d, y').format(_selectedDate),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.chevron_right),
+                            onPressed: () {
+                              // Logic for editing the date
+                              _selectDate(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _textEditingController,
+                      maxLines: 10,
+                      textAlign:
+                          _isTextCentered ? TextAlign.center : TextAlign.start,
+                      decoration: InputDecoration(
+                        hintText: 'Record your day ...',
+                        hintStyle: TextStyle(fontStyle: FontStyle.italic),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        // Add your logic when text changes in TextFormField
+                      },
+                      onTap: () {
+                        setState(() {
+                          _isKeyboardVisible = true;
+                        });
+                      },
+                      onEditingComplete: () {
+                        setState(() {
+                          _isKeyboardVisible = false;
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            TextFormField(
-              maxLines: 10,
-              decoration: InputDecoration(
-                hintText: 'Record your day ...',
-                hintStyle: TextStyle(fontStyle: FontStyle.italic),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.transparent),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.transparent),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.transparent),
-                ),
-              ),
-              onChanged: (value) {
-                // Add your logic when text changes in TextFormField
-              },
-              onTap: () {
-                setState(() {
-                  _isKeyboardVisible = true;
-                });
-              },
-              onEditingComplete: () {
-                setState(() {
-                  _isKeyboardVisible = false;
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Logic for the ElevatedButton (to save the diary entry)
-                  Navigator.of(context).pop();
-                },
-                child: Text('Save Diary Entry'),
-              ),
-            ),
-            SizedBox(height: 80), // Space for bottom navigation
-          ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: _isKeyboardVisible
-          ? BottomAppBar(
+            BottomAppBar(
               color: Colors.white,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      // Logic for the image icon button
-                    },
-                    icon: Icon(Icons.image),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          // Logic for the image icon button
+                        },
+                        icon: Icon(Icons.image),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          // Toggle text alignment between left and center
+                          setState(() {
+                            _isTextCentered = !_isTextCentered;
+                          });
+                        },
+                        icon: _isTextCentered
+                            ? Icon(Icons
+                                .format_align_center) // Center alignment icon
+                            : Icon(
+                                Icons.format_align_left), // Left alignment icon
+                      ),
+                    ],
                   ),
                   IconButton(
                     onPressed: () {
-                      // Logic for the alignment icon button
-                    },
-                    icon: Icon(Icons.format_align_left),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      // Logic for the check button
+                      // Logic for the check button (save the diary entry)
+                      saveDiaryEntry();
                     },
                     icon: Icon(Icons.check),
                   ),
                 ],
               ),
-            )
-          : null,
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  void saveDiaryEntry() {
+    // Add your logic here to save the diary entry using _textEditingController.text
+    print('Diary entry saved: ${_textEditingController.text}');
+    Navigator.of(context).pop(); // Close the page after saving
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    // Add your logic to show a date picker and update the _selectedDate
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(), // Limit to the present or past
+    );
+
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    }
   }
 }
 
@@ -605,25 +682,199 @@ class VirtualSupportGroupPage extends StatefulWidget {
       _VirtualSupportGroupPageState();
 }
 
-class ConversationPage extends StatelessWidget {
+class ConversationPage extends StatefulWidget {
   final String contactName;
 
   const ConversationPage({Key? key, required this.contactName})
       : super(key: key);
 
   @override
+  _ConversationPageState createState() => _ConversationPageState();
+}
+
+class _ConversationPageState extends State<ConversationPage> {
+  List<ChatMessage> messages = [];
+  TextEditingController _messageController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Hardcoded initial messages
+    messages.add(ChatMessage(text: 'Hello!', isMe: true));
+    messages.add(ChatMessage(text: 'Hey!', isMe: false));
+    messages.add(ChatMessage(text: 'My name is Wonyoung.', isMe: true));
+    messages.add(ChatMessage(
+        text: 'Nice to meet you, Wonyoung. Welcome to this conversation!',
+        isMe: false));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('$contactName'), // Display the contact's name in the app bar
+        title: Text(widget.contactName),
       ),
-      body: Center(
-        child: Text(
-            'Conversation with $contactName'), // Placeholder for conversation content
+      body: Column(
+        children: [
+          // List of Messages
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.all(8.0),
+              children: messages.map((message) {
+                return _buildMessage(
+                  isMe: message.isMe,
+                  text: message.text,
+                );
+              }).toList(),
+            ),
+          ),
+          // Input field for typing messages
+          _buildMessageInputField(),
+        ],
       ),
     );
   }
+
+  Widget _buildMessage({required bool isMe, required String text}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (!isMe) // Show avatar only for messages from the other person
+          Container(
+            margin:
+                EdgeInsets.only(right: 8.0, top: 25.0), // Move the avatar lower
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Color(0xFF5C00A4), width: 1.0),
+            ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: Icon(
+                    Icons.person, // You can use any other icon here
+                    color: Color(0xFF5C00A4),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment:
+                isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            children: [
+              if (!isMe) // Show sender's name only for messages from the other person
+                Text(
+                  'Annie Leonhart',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.7,
+                  // Adjust the maxWidth as needed
+                ),
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  padding: EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    color: isMe ? Color(0xFF5C00A4) : Colors.grey[300],
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                      color: isMe ? Colors.white : Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMessageInputField() {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: 40.0, // Set the height as needed
+              child: TextField(
+                controller: _messageController,
+                decoration: InputDecoration(
+                  hintText: 'Type a message ...',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                    borderSide:
+                        BorderSide(color: Color(0xFF5C00A4), width: 1.0),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 15.0), // Adjust the padding
+                ),
+                onSubmitted: (message) {
+                  _sendMessage(message, true);
+                  _messageController.clear();
+                },
+              ),
+            ),
+          ),
+          SizedBox(width: 8.0),
+          Container(
+            height: 45.0, // Set the height to match the TextField
+            child: IconButton(
+              icon: Icon(Icons.send),
+              color: Color(0xFF5C00A4), // Set the icon color to purple
+              onPressed: () {
+                final message = _messageController.text.trim();
+                if (message.isNotEmpty) {
+                  _sendMessage(message, true);
+                  _messageController.clear();
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _sendMessage(String text, bool isMe) {
+    setState(() {
+      messages.add(ChatMessage(text: text, isMe: true));
+      // Simulate an immediate response from the other person
+      _sendAutomaticResponse();
+    });
+  }
+
+  void _sendAutomaticResponse() {
+    final longMessage =
+        'This is a fake response. I am actually not real, but I hope that you\'re doing fine and well!';
+
+    setState(() {
+      messages.add(ChatMessage(text: longMessage, isMe: false));
+    });
+  }
+}
+
+class ChatMessage {
+  final String text;
+  final bool isMe;
+
+  ChatMessage({required this.text, required this.isMe});
 }
 
 class _VirtualSupportGroupPageState extends State<VirtualSupportGroupPage> {
@@ -908,67 +1159,115 @@ class FindGroupsContent extends StatelessWidget {
       decoration: BoxDecoration(color: Color(0xFFF8F8F8)),
       child: Stack(
         children: [
-          // Placeholder for a Small Icon or Indicator
-          Positioned(
-            left: 28,
-            top: 100,
-            child: Container(
-              width: 150,
-              height: 150,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                      'assets/exo.png'), // Replace with your image path
-                  fit: BoxFit.cover, // Adjust the fit as needed
-                ),
-                color: Colors
-                    .grey, // Replace with desired color or remove for image
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  ),
-                ],
-              ),
-            ),
+          _buildGroup(
+            imagePath: 'assets/exo.png',
+            groupName: 'Kpop',
+            leftPosition: 28,
+            topPosition: 100,
           ),
-          Positioned(
-            left: 28,
-            top: 226,
-            child: Container(
-              width: 150,
-              height: 24,
-              decoration: BoxDecoration(
-                color: Color(0xFFF8F8F8),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                ),
-              ),
-            ),
+          _buildGroup(
+            imagePath: 'assets/kn.jpg',
+            groupName: 'KathNiel',
+            leftPosition: 28,
+            topPosition: 280,
           ),
-          Positioned(
-            left: 86,
-            top: 230,
-            child: Opacity(
-              opacity: 0.70,
-              child: Text(
-                'Kpop',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w600,
-                  height: 0,
-                ),
-              ),
-            ),
+          _buildGroup(
+            imagePath: 'assets/unecs.jpg',
+            groupName: 'UNECS',
+            leftPosition: 200,
+            topPosition: 280,
+          ),
+          _buildGroup(
+            imagePath: 'assets/unecs.jpg',
+            groupName: 'UNECS',
+            leftPosition: 28,
+            topPosition: 280,
           ),
         ],
+      ),
+    );
+  }
+
+  Positioned _buildGroup({
+    required String imagePath,
+    required String groupName,
+    required double leftPosition,
+    required double topPosition,
+  }) {
+    return Positioned(
+      left: leftPosition,
+      top: topPosition,
+      child: Container(
+        width: 150,
+        height: 150,
+        child: Stack(
+          children: [
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: ShapeDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(imagePath),
+                    fit: BoxFit.fill,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 1,
+                      color: Color(0xFFCCCCCC),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 126,
+              child: Container(
+                width: 150,
+                height: 24,
+                decoration: ShapeDecoration(
+                  color: Color(0xFFF8F8F8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 60,
+              top: 130,
+              child: Opacity(
+                opacity: 0.70,
+                child: Text(
+                  groupName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w600,
+                    height: 0,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
